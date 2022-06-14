@@ -17,6 +17,6 @@ export const channelSlice = createSlice({
 
 export const { enterChannel } = channelSlice.actions;
 
-export const selectChannelID = (state) => state.app.channelID;
+export const selectChannelID = (state) => state.channel.channelID;
 
 export default channelSlice.reducer;

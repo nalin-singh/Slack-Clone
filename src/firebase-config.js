@@ -25,8 +25,9 @@ const firebaseApp = initializeApp(firebaseConfig);
 const analytics = getAnalytics(firebaseApp);
 
 const database = getFirestore(firebaseApp);
+const databaseRef = collection(database,"channels");
 
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
 
-export { auth, provider, database };
+export { auth, provider, database, databaseRef };

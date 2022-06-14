@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { StarBorderOutlined, InfoOutlined } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { selectChannelID } from "../features/channelSlice";
+import ChatInput from "./ChatInput";
+
 function Chat() {
 	const channelId = useSelector(selectChannelID);
 	return (
@@ -21,7 +23,7 @@ function Chat() {
 				</HeaderRight>
 			</Header>
 			<ChatMessages></ChatMessages>
-			<ChatInput channelID={channelId}></ChatInput>
+			<ChatInput channelId={channelId} />
 		</ChatContainer>
 	);
 }
@@ -69,5 +71,3 @@ const HeaderRight = styled.div`
 `;
 
 const ChatMessages = styled.div``;
-
-const ChatInput = styled.div``;

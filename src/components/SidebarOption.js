@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { useCollection } from "react-firebase-hooks/firestore";
 import { database } from "../firebase-config";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 
 import { useDispatch } from "react-redux";
 import { enterChannel } from "../features/channelSlice";
@@ -21,7 +20,7 @@ function SidebarOption({ channelId, Icon, title, addChannelOption }) {
 		if (channelId) {
 			dispatch(enterChannel({ channelID: channelId }));
 		}
-	};
+	}; 
 
 	return (
 		<SidebarOptionContainer

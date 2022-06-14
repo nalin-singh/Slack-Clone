@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import channelSlice from "../features/channelSlice";
+import channelReducer from "../features/channelSlice";
 export const store = configureStore({
-	reducer: { channelSlice },
+	reducer: { channel: channelReducer },
 });
