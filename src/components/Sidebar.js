@@ -14,13 +14,15 @@ import {
 } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { database } from "../firebase-config";
+import { auth, database } from "../firebase-config";
 import styled from "styled-components";
 import SidebarOption from "./SidebarOption";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 function Sidebar() {
 	const databaseRef = collection(database, "channels");
 	const [channels, setData] = useState([]);
+	const [user] = useAuthState(auth);
 
 	const getData = async () => {
 		const data = await getDocs(databaseRef);
@@ -41,7 +43,7 @@ function Sidebar() {
 					<h2>Craftic.io</h2>
 					<h3>
 						<FiberManualRecord />
-						Nalin Singh
+						{user?.displayName}
 					</h3>
 				</SidebarInfo>
 				<Create />
