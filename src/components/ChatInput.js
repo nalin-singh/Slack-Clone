@@ -6,11 +6,13 @@ import {
 	serverTimestamp,
 } from "firebase/firestore/lite";
 import React, { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import styled from "styled-components";
-import { database } from "../firebase-config";
+import { auth, database } from "../firebase-config";
 
-function ChatInput({ channelName, channelId }) {
+function ChatInput({ chatRef, channelName, channelId }) {
 	const [input, setInput] = useState("");
+	const [user] = useAuthState(auth); //Sending the chat input to Firebase Store
 	const sendMessage = (e) => {
 		e.preventDefault(); //Prevents Refresh when we press enter
 		if (!channelId) {
@@ -21,18 +23,22 @@ function ChatInput({ channelName, channelId }) {
 		addDoc(colRef, {
 			message: input,
 			timestamp: serverTimestamp(),
-			user: "Nalin Singh",
+			user: user.displayName,
 		});
 		setInput("");
 	};
+
+	chatRef?.current?.scrollIntoView({ behavior: "smooth" });
 
 	return (
 		<ChatInputContainer>
 			<form>
 				<input
 					value={input}
-					placeholder={`Message #Room`}
-					onChange={(e) => setInput(e.target.value)}
+					placeholder={`Message #${channelName}`}
+					onChange={(e) => {
+						setInput(e.target.value);
+					}}
 				/>
 				<Button hidden type="submit" onClick={sendMessage}>
 					Send

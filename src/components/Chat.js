@@ -1,18 +1,40 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { StarBorderOutlined, InfoOutlined } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { selectChannelID } from "../features/channelSlice";
 import ChatInput from "./ChatInput";
+import Message from "./Message";
+import { database } from "../firebase-config";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 
 function Chat() {
+	const chatRef = useRef(null);
 	const channelId = useSelector(selectChannelID);
+
+	//Finding the channel name from channelID
+	const docRef = doc(
+		database,
+		"channels",
+		channelId ? channelId : "0jlLxGdxphQU5Wd3BGh9"
+	);
+	const colRef = collection(docRef, "messages");
+	const [channelDetails, loading, error] = useDocument(docRef);
+	const [channelMessages, stillLoading] = useCollection(colRef);
+	const channelName = channelDetails?.data().name;
+
+	//Automatically Scroll to Bottom
+	useEffect(() => {
+		chatRef?.current?.scrollIntoView({ behavior: "smooth"});
+	}, [channelId, stillLoading]);
+
 	return (
 		<ChatContainer>
 			<Header>
 				<HeaderLeft>
 					<h4>
-						<strong>#Room-Name</strong>
+						<strong>#{channelName}</strong>
 					</h4>
 					<StarBorderOutlined />
 				</HeaderLeft>
@@ -22,8 +44,21 @@ function Chat() {
 					</p>
 				</HeaderRight>
 			</Header>
-			<ChatMessages></ChatMessages>
-			<ChatInput channelId={channelId} />
+			<ChatMessages>
+				{channelMessages?.docs.map((doc) => {
+					const { message, timestamp, user } = doc.data();
+					return (
+						<Message
+							key={doc.id}
+							message={message}
+							timestamp={timestamp}
+							user={user}
+						/>
+					);
+				})}
+				<ChatBottom ref={chatRef} />
+			</ChatMessages>
+			<ChatInput chatRef={chatRef} channelId={channelId} channelName={channelName} />
 		</ChatContainer>
 	);
 }
@@ -70,4 +105,10 @@ const HeaderRight = styled.div`
 	}
 `;
 
-const ChatMessages = styled.div``;
+const ChatMessages = styled.div`
+	display: block;
+`;
+
+const ChatBottom = styled.div`
+	padding-bottom: 16rem;
+`;
