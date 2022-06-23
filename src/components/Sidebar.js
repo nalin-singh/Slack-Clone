@@ -33,9 +33,10 @@ function Sidebar() {
 		);
 	};
 
-	useEffect(() => {
-		getData();
-	}, []);
+	// useEffect(() => {
+	// 	getData();
+	// }, []);
+
 	return (
 		<SidebarContainer>
 			<SidebarHeader>

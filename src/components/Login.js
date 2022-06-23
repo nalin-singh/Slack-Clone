@@ -23,12 +23,16 @@ function Login() {
 				const email = error.customData.email;
 				// The AuthCredential type that was used.
 				const credential = GoogleAuthProvider.credentialFromError(error);
+                alert(errorCode, errorMessage, email, credential);
 			});
 	};
 	return (
 		<LoginContainer>
 			<LoginInnerContainer>
-				<img src="https://cdn.bfldr.com/5H442O3W/at/pl546j-7le8zk-6gwiyo/Slack_Mark.svg?auto=webp&format=png" />
+				<img
+					src="https://cdn.bfldr.com/5H442O3W/at/pl546j-7le8zk-6gwiyo/Slack_Mark.svg?auto=webp&format=png"
+					alt="Slack"
+				/>
 				<h1>Sign in to Craftic.co</h1>
 				<p>craftic.slack.com</p>
 				<Button onClick={signIn}>Sign in with Google</Button>

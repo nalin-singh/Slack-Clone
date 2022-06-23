@@ -6,7 +6,7 @@ import { selectChannelID } from "../features/channelSlice";
 import ChatInput from "./ChatInput";
 import Message from "./Message";
 import { database } from "../firebase-config";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, doc } from "firebase/firestore";
 import { useCollection, useDocument } from "react-firebase-hooks/firestore";
 
 function Chat() {
@@ -20,7 +20,7 @@ function Chat() {
 		channelId ? channelId : "0jlLxGdxphQU5Wd3BGh9"
 	);
 	const colRef = collection(docRef, "messages");
-	const [channelDetails, loading, error] = useDocument(docRef);
+	const [channelDetails] = useDocument(docRef);
 	const [channelMessages, stillLoading] = useCollection(colRef);
 	const channelName = channelDetails?.data().name;
 

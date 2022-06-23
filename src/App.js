@@ -20,7 +20,10 @@ function App() {
 		return (
 			<AppLoading>
 				<AppLoadingContainer>
-					<img src="https://cdn.bfldr.com/5H442O3W/at/pl546j-7le8zk-6gwiyo/Slack_Mark.svg?auto=webp&format=png" />
+					<img
+						src="https://cdn.bfldr.com/5H442O3W/at/pl546j-7le8zk-6gwiyo/Slack_Mark.svg?auto=webp&format=png"
+						alt="Slack"
+					/>
 					<Spinner name="circle" />
 				</AppLoadingContainer>
 			</AppLoading>
@@ -31,7 +34,7 @@ function App() {
 		<div className="App">
 			<BrowserRouter>
 				{!user ? (
-					<Login /> 
+					<Login />
 				) : (
 					<>
 						<AppBody>
